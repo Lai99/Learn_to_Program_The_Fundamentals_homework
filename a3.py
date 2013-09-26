@@ -12,7 +12,7 @@ A word list is a list of str. For example, the list of words
 is represented as the list
     ['ANT', 'BOX', 'SOB', 'TO']
 """
-
+from tkinter.filedialog import askopenfile
 
 def is_valid_word(wordlist, word):
     """ (list of str, str) -> bool
@@ -163,7 +163,10 @@ def read_words(words_file):
     Precondition: Each line of the file contains a word in uppercase characters
     from the standard English alphabet.
     """
+    words = []
+    words.append(words_file.readline())
 
+    return words
 
 def read_board(board_file):
     """ (file open for reading) -> list of list of str
@@ -171,4 +174,15 @@ def read_board(board_file):
     Return a board read from open file board_file. The board file will contain
     one row of the board per line. Newlines are not included in the board.
     """
+    board = []
+    line = board_file.readline()
+    while line != '':
+        tmp = []
+        for c in line:
+            tmp.append(c)
+        board.append(tmp)
+        line = board_file.readline()
+
+    return board
+
 
