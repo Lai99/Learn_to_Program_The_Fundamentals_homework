@@ -12,8 +12,6 @@ A word list is a list of str. For example, the list of words
 is represented as the list
     ['ANT', 'BOX', 'SOB', 'TO']
 """
-from tkinter.filedialog import askopenfile
-
 def is_valid_word(wordlist, word):
     """ (list of str, str) -> bool
 
@@ -138,7 +136,7 @@ def update_score(player_info, word):
 
     >>> update_score(['Jonathan', 4], 'ANT')
     """
-    player_infon[1] = word_score(word)
+    player_info[1] += word_score(word)
 
 def num_words_on_board(board, words):
     """ (list of list of str, list of str) -> int
@@ -150,7 +148,7 @@ def num_words_on_board(board, words):
     """
     num = 0
     for word in words:
-        if board_contains_word(board, word):
+        if board_contains_word(board, word.rstrip('\n')):
             num += 1
     return num
 
@@ -164,7 +162,11 @@ def read_words(words_file):
     from the standard English alphabet.
     """
     words = []
-    words.append(words_file.readline())
+    word = words_file.readline().rstrip('\n')
+
+    while word != '':
+        words.append(word)
+        word = words_file.readline().rstrip('\n')
 
     return words
 
@@ -178,7 +180,8 @@ def read_board(board_file):
     line = board_file.readline()
     while line != '':
         tmp = []
-        for c in line:
+        for c in line.rstrip('\n'):
+  #          if c != '\n':
             tmp.append(c)
         board.append(tmp)
         line = board_file.readline()
